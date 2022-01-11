@@ -54,35 +54,34 @@ private:
     DECLARE_EVENT_TABLE()
 
 private:
-    MainFrame *mainFrame;
-    wxBoxSizer *box;
+    MainFrame* m_mainFrame;
 
-    wxBitmapToggleButton *toggleCenterBtn;
+    wxBitmapToggleButton* m_toggleCenterBtn;
 
-    wxStaticText *zoomLabel;
+    wxStaticText* m_zoomLabel;
 
-    wxSimplebook *toolsBook;
-    std::unordered_map<int, wxWindow*> toolsPages;
+    wxSimplebook* m_toolsBook;
+    std::unordered_map<int, wxWindow*> m_toolsPages;
 
     //COLOR BACKGROUND OPTIONS
-    wxColourPickerCtrl *colorPickerCtrl;
-    wxButton *colorMeanBtn;
+    wxColourPickerCtrl* m_colorPickerCtrl;
+    wxButton* m_colorMeanBtn;
 
-    wxSlider *colorOffsetSlider;
-    wxNumberCtrl *colorOffsetCtrl;
-    int colorOffset;
+    wxSlider* m_colorOffsetSlider;
+    wxNumberCtrl* m_colorOffsetCtrl;
+    int m_colorOffset;
 
-    wxSlider *colorMarginSlider;
-    wxNumberCtrl *colorMarginCtrl;
-    int colorMargin;
+    wxSlider* m_colorMarginSlider;
+    wxNumberCtrl* m_colorMarginCtrl;
+    int m_colorMargin;
 
     //CROP OPTIONS
-    wxSlider *cropOffsetSlider;
-    wxNumberCtrl *cropOffsetCtrl;
-    int cropOffset;
+    wxSlider* m_cropOffsetSlider;
+    wxNumberCtrl* m_cropOffsetCtrl;
+    int m_cropOffset;
 
     //BLUR OPTIONS
-    wxSlider *blurRadiusSlider;
-    wxNumberCtrl *blurRadiusCtrl;
+    wxSlider* m_blurRadiusSlider;
+    wxNumberCtrl* m_blurRadiusCtrl;
     int m_blurRadius;
 };
