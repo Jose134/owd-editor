@@ -4,7 +4,7 @@
 
 
 namespace editor {
-    wxImage makeSquared(const wxBitmap& bitmap, const wxRect region, const wxColour* bgColor = wxWHITE, int offset = 0, int margin = 0);
+    wxImage makeSquared(const wxBitmap& bitmap, const wxRect region, const wxColour* bgColor = wxWHITE, int offsetX = 0, int offsetY = 0, int margin = 0);
     wxImage makeSquaredCrop(const wxImage& img, int offset = 0);
     wxImage makeSquaredBlur(const wxImage& img, const int radius = 80);
     wxImage makeSquaredBlur(const wxImage& img, const wxBitmap& bitmap, const int radius = 80);

@@ -67,9 +67,13 @@ private:
     wxColourPickerCtrl* m_colorPickerCtrl;
     wxButton* m_colorMeanBtn;
 
-    wxSlider* m_colorOffsetSlider;
-    wxNumberCtrl* m_colorOffsetCtrl;
-    int m_colorOffset;
+    wxSlider* m_colorOffsetXSlider;
+    wxNumberCtrl* m_colorOffsetXCtrl;
+    int m_colorOffsetX;
+
+    wxSlider* m_colorOffsetYSlider;
+    wxNumberCtrl* m_colorOffsetYCtrl;
+    int m_colorOffsetY;
 
     wxSlider* m_colorMarginSlider;
     wxNumberCtrl* m_colorMarginCtrl;

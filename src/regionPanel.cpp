@@ -8,7 +8,7 @@ enum {
     ID_APPLY = wxID_HIGHEST + 5
 };
 
-BEGIN_EVENT_TABLE(RegionPanel, wxCollapsiblePane)
+BEGIN_EVENT_TABLE(RegionPanel, wxPanel)
 
 EVT_TEXT_ENTER(ID_XCTRL, RegionPanel::OnXCtrl)
 EVT_TEXT_ENTER(ID_YCTRL, RegionPanel::OnYCtrl)
@@ -21,13 +21,11 @@ END_EVENT_TABLE()
 
 RegionPanel::RegionPanel(wxWindow *parent,
                 wxWindowID winid,
-                const wxString& label,
                 const wxPoint& pos,
                 const wxSize& size,
                 long style,
-                const wxValidator& val,
                 const wxString& name)
-    : wxCollapsiblePane(parent, winid, label, pos, size, style, val, name)
+    : wxPanel(parent, winid, pos, size, style, name)
 {
 
     wxSize gaps(editor::DEFAULT_SPACER_SIZE, editor::DEFAULT_SPACER_SIZE);

@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 
-wxImage editor::makeSquared(const wxBitmap& bitmap, const wxRect region, const wxColour* bgColor, int offset, int margin) {
+wxImage editor::makeSquared(const wxBitmap& bitmap, const wxRect region, const wxColour* bgColor, int offsetX, int offsetY, int margin) {
     wxBitmap subBitmap = bitmap.GetSubBitmap(region);
     int size = subBitmap.GetWidth() > subBitmap.GetHeight() ? subBitmap.GetWidth() : subBitmap.GetHeight();
     size += margin * 2;
@@ -31,8 +31,8 @@ wxImage editor::makeSquared(const wxBitmap& bitmap, const wxRect region, const w
     wxMemoryDC mdc;
     mdc.SelectObjectAsSource(subBitmap);
 
-    int dstX = subBitmap.GetWidth() > subBitmap.GetHeight() ? margin : (subBitmap.GetHeight() - subBitmap.GetWidth()) / 2 + offset + margin;
-    int dstY = subBitmap.GetWidth() < subBitmap.GetHeight() ? margin : (subBitmap.GetWidth() - subBitmap.GetHeight()) / 2 + offset + margin;
+    int dstX = subBitmap.GetWidth() > subBitmap.GetHeight() ? margin + offsetX : (subBitmap.GetHeight() - subBitmap.GetWidth()) / 2 + offsetX + margin;
+    int dstY = subBitmap.GetWidth() < subBitmap.GetHeight() ? margin + offsetY : (subBitmap.GetWidth() - subBitmap.GetHeight()) / 2 + offsetY + margin;
     dc.Blit(dstX, dstY, bitmap.GetWidth(), bitmap.GetHeight(), &mdc, 0, 0, wxCOPY);
 
     return result.ConvertToImage();

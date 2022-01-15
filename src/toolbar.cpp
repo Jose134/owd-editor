@@ -10,31 +10,28 @@
 
 enum {
     ID_REGION_PANEL           = wxID_HIGHEST + 1,
-    ID_REGION_X_CTRL          = wxID_HIGHEST + 2,
-    ID_REGION_Y_CTRL          = wxID_HIGHEST + 3,
-    ID_REGION_W_CTRL          = wxID_HIGHEST + 4,
-    ID_REGION_H_CTRL          = wxID_HIGHEST + 5,
-    ID_REGION_SELECT          = wxID_HIGHEST + 6,
 
-    ID_COLOR                  = wxID_HIGHEST + 7,
-    ID_CROP                   = wxID_HIGHEST + 8,
-    ID_BLUR                   = wxID_HIGHEST + 9,
-    ID_EXPORT                 = wxID_HIGHEST + 10,
+    ID_COLOR                  = wxID_HIGHEST + 2,
+    ID_CROP                   = wxID_HIGHEST + 3,
+    ID_BLUR                   = wxID_HIGHEST + 4,
+    ID_EXPORT                 = wxID_HIGHEST + 5,
 
-    ID_COLOR_COLOR_PICKER     = wxID_HIGHEST + 11,
-    ID_COLOR_WHITE_BTN        = wxID_HIGHEST + 12,
-    ID_COLOR_BLACK_BTN        = wxID_HIGHEST + 13,
-    ID_COLOR_MEAN_BTN         = wxID_HIGHEST + 14,
-    ID_COLOR_OFFSET_SLIDER    = wxID_HIGHEST + 15,
-    ID_COLOR_OFFSET_CTRL      = wxID_HIGHEST + 16,
-    ID_COLOR_MARGIN_SLIDER    = wxID_HIGHEST + 17,
-    ID_COLOR_MARGIN_CTRL      = wxID_HIGHEST + 18,
-    ID_CROP_OFFSET_SLIDER     = wxID_HIGHEST + 19,
-    ID_CROP_OFFSET_CTRL       = wxID_HIGHEST + 20,
-    ID_BLUR_RADIUS_SLIDER     = wxID_HIGHEST + 21,
-    ID_BLUR_RADIUS_CTRL       = wxID_HIGHEST + 22,
+    ID_COLOR_COLOR_PICKER     = wxID_HIGHEST + 6,
+    ID_COLOR_WHITE_BTN        = wxID_HIGHEST + 7,
+    ID_COLOR_BLACK_BTN        = wxID_HIGHEST + 8,
+    ID_COLOR_MEAN_BTN         = wxID_HIGHEST + 9,
+    ID_COLOR_OFFSETX_SLIDER    = wxID_HIGHEST + 10,
+    ID_COLOR_OFFSETX_CTRL      = wxID_HIGHEST + 11,
+    ID_COLOR_OFFSETY_SLIDER    = wxID_HIGHEST + 12,
+    ID_COLOR_OFFSETY_CTRL      = wxID_HIGHEST + 13,
+    ID_COLOR_MARGIN_SLIDER    = wxID_HIGHEST + 14,
+    ID_COLOR_MARGIN_CTRL      = wxID_HIGHEST + 15,
+    ID_CROP_OFFSET_SLIDER     = wxID_HIGHEST + 16,
+    ID_CROP_OFFSET_CTRL       = wxID_HIGHEST + 17,
+    ID_BLUR_RADIUS_SLIDER     = wxID_HIGHEST + 18,
+    ID_BLUR_RADIUS_CTRL       = wxID_HIGHEST + 19,
 
-    ID_TOGGLE_CENTER          = wxID_HIGHEST + 23
+    ID_TOGGLE_CENTER          = wxID_HIGHEST + 20
 };
 
 BEGIN_EVENT_TABLE (Toolbar, wxPanel)
@@ -54,8 +51,10 @@ EVT_COLOURPICKER_CHANGED(ID_COLOR_COLOR_PICKER, Toolbar::OnColorPickerChange)
 EVT_BUTTON(ID_COLOR_WHITE_BTN, Toolbar::OnColorWhitePress)
 EVT_BUTTON(ID_COLOR_BLACK_BTN, Toolbar::OnColorBlackPress)
 EVT_BUTTON(ID_COLOR_MEAN_BTN, Toolbar::OnColorMeanPress)
-EVT_SLIDER(ID_COLOR_OFFSET_SLIDER, Toolbar::OnColorOffsetSlide)
-EVT_TEXT_ENTER(ID_COLOR_OFFSET_CTRL, Toolbar::OnColorOffsetText)
+EVT_SLIDER(ID_COLOR_OFFSETX_SLIDER, Toolbar::OnColorOffsetSlide)
+EVT_TEXT_ENTER(ID_COLOR_OFFSETX_CTRL, Toolbar::OnColorOffsetText)
+EVT_SLIDER(ID_COLOR_OFFSETY_SLIDER, Toolbar::OnColorOffsetSlide)
+EVT_TEXT_ENTER(ID_COLOR_OFFSETY_CTRL, Toolbar::OnColorOffsetText)
 EVT_SLIDER(ID_COLOR_MARGIN_SLIDER, Toolbar::OnColorMarginSlide)
 EVT_TEXT_ENTER(ID_COLOR_MARGIN_CTRL, Toolbar::OnColorMarginText)
 
@@ -75,34 +74,6 @@ Toolbar::Toolbar (wxFrame *parent)
 
     wxBoxSizer* box = new wxBoxSizer(wxVERTICAL);
     box->AddSpacer(editor::DEFAULT_SPACER_SIZE);
-
-    //REGION
-
-    /*
-    RegionPanel* regionPanel = new RegionPanel(this, ID_REGION_PANEL, "Input region");
-    box->Add(regionPanel, 0, wxEXPAND | wxALL, editor::DEFAULT_SPACER_SIZE);
-    */
-
-    /*
-    wxCollapsiblePane* regionPanel = new wxCollapsiblePane(this, ID_REGION_PANEL, "Input region");
-    wxSize gaps(editor::DEFAULT_SPACER_SIZE, editor::DEFAULT_SPACER_SIZE);
-    wxGridSizer* mainSizer = new wxGridSizer(2, 2, gaps);
-
-    wxNumberCtrl* m_xCtrl = new wxNumberCtrl(regionPanel, ID_REGION_X_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    mainSizer->Add(m_xCtrl);
-    
-    wxNumberCtrl* m_yCtrl = new wxNumberCtrl(regionPanel, ID_REGION_Y_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    mainSizer->Add(m_yCtrl);
-    
-    wxNumberCtrl* m_wCtrl = new wxNumberCtrl(regionPanel, ID_REGION_W_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    mainSizer->Add(m_wCtrl);
-    
-    wxNumberCtrl* m_hCtrl = new wxNumberCtrl(regionPanel, ID_REGION_H_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    mainSizer->Add(m_hCtrl);
-
-    regionPanel->SetSizer(mainSizer);
-    box->Add(regionPanel, 0, wxEXPAND | wxALL, 5);
-    */
 
     //TOOLS    
     wxButton* colorBtn = new wxButton(this, ID_COLOR, "COLOR BACKGROUND");
@@ -205,23 +176,42 @@ Toolbar::Toolbar (wxFrame *parent)
     colorPageBox->Add(colorColorControlSizer, 0, wxEXPAND | wxALL);
     colorPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    wxBoxSizer* colorOffsetControlSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* colorOffsetXControlSizer = new wxBoxSizer(wxHORIZONTAL);
     
-    m_colorOffsetSlider = new wxSlider(colorPage, ID_COLOR_OFFSET_SLIDER, 0, 0, 1000);
-    colorOffsetControlSizer->Add(m_colorOffsetSlider);
-    colorOffsetControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    m_colorOffsetXSlider = new wxSlider(colorPage, ID_COLOR_OFFSETX_SLIDER, 0, 0, 1000);
+    colorOffsetXControlSizer->Add(m_colorOffsetXSlider);
+    colorOffsetXControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    m_colorOffsetCtrl = new wxNumberCtrl(colorPage, ID_COLOR_OFFSET_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
-    m_colorOffsetCtrl->AcceptIntOnly(true);
-    m_colorOffsetCtrl->SetInt(0);
-    colorOffsetControlSizer->Add(m_colorOffsetCtrl, 0, wxALIGN_CENTER_VERTICAL);
-    colorOffsetControlSizer->AddStretchSpacer();
+    m_colorOffsetXCtrl = new wxNumberCtrl(colorPage, ID_COLOR_OFFSETX_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    m_colorOffsetXCtrl->AcceptIntOnly(true);
+    m_colorOffsetXCtrl->SetInt(0);
+    colorOffsetXControlSizer->Add(m_colorOffsetXCtrl, 0, wxALIGN_CENTER_VERTICAL);
+    colorOffsetXControlSizer->AddStretchSpacer();
 
-    wxStaticText* colorOffsetLabel = new wxStaticText(colorPage, wxID_ANY, "Offset");
-    colorOffsetControlSizer->Add(colorOffsetLabel, 0, wxALIGN_CENTER_VERTICAL);
-    colorOffsetControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    wxStaticText* colorOffsetXLabel = new wxStaticText(colorPage, wxID_ANY, "Offset X");
+    colorOffsetXControlSizer->Add(colorOffsetXLabel, 0, wxALIGN_CENTER_VERTICAL);
+    colorOffsetXControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    colorPageBox->Add(colorOffsetControlSizer, 0, wxEXPAND | wxALL);
+    colorPageBox->Add(colorOffsetXControlSizer, 0, wxEXPAND | wxALL);
+    colorPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
+    wxBoxSizer* colorOffsetYControlSizer = new wxBoxSizer(wxHORIZONTAL);
+    
+    m_colorOffsetYSlider = new wxSlider(colorPage, ID_COLOR_OFFSETY_SLIDER, 0, 0, 1000);
+    colorOffsetYControlSizer->Add(m_colorOffsetYSlider);
+    colorOffsetYControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
+    m_colorOffsetYCtrl = new wxNumberCtrl(colorPage, ID_COLOR_OFFSETY_CTRL, 0, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+    m_colorOffsetYCtrl->AcceptIntOnly(true);
+    m_colorOffsetYCtrl->SetInt(0);
+    colorOffsetYControlSizer->Add(m_colorOffsetYCtrl, 0, wxALIGN_CENTER_VERTICAL);
+    colorOffsetYControlSizer->AddStretchSpacer();
+
+    wxStaticText* colorOffsetYLabel = new wxStaticText(colorPage, wxID_ANY, "Offset Y");
+    colorOffsetYControlSizer->Add(colorOffsetYLabel, 0, wxALIGN_CENTER_VERTICAL);
+    colorOffsetYControlSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
+    colorPageBox->Add(colorOffsetYControlSizer, 0, wxEXPAND | wxALL);
     colorPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
     wxBoxSizer* colorMarginControlSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -359,6 +349,14 @@ void Toolbar::PanelImageUpdated () {
 
     int maxOffset = std::abs(img.GetWidth() - img.GetHeight()) / 2;
 
+    int maxOffsetX = img.GetWidth() > img.GetHeight()
+                        ? img.GetWidth()
+                        : (3*img.GetHeight() - img.GetWidth()) / 2;
+
+    int maxOffsetY = img.GetWidth() < img.GetHeight()
+                        ? img.GetHeight()
+                        : (3*img.GetWidth() - img.GetHeight()) / 2;
+
     m_cropOffset = 0;
 
     m_cropOffsetSlider->SetMin(-maxOffset);
@@ -368,14 +366,22 @@ void Toolbar::PanelImageUpdated () {
     m_cropOffsetCtrl->SetRange(-maxOffset, maxOffset);
     m_cropOffsetCtrl->SetInt(0);
 
-    m_colorOffset = 0;
+    m_colorOffsetX = 0;
+    m_colorOffsetY = 0;
 
-    m_colorOffsetSlider->SetMin(-maxOffset);
-    m_colorOffsetSlider->SetMax(maxOffset);
-    m_colorOffsetSlider->SetValue(0);
+    m_colorOffsetXSlider->SetMin(-maxOffsetX);
+    m_colorOffsetXSlider->SetMax(maxOffsetX);
+    m_colorOffsetXSlider->SetValue(0);
 
-    m_colorOffsetCtrl->SetRange(-maxOffset, maxOffset);
-    m_colorOffsetCtrl->SetInt(0);
+    m_colorOffsetXCtrl->SetRange(-maxOffsetX, maxOffsetX);
+    m_colorOffsetXCtrl->SetInt(0);
+
+    m_colorOffsetYSlider->SetMin(-maxOffsetY);
+    m_colorOffsetYSlider->SetMax(maxOffsetY);
+    m_colorOffsetYSlider->SetValue(0);
+
+    m_colorOffsetYCtrl->SetRange(-maxOffsetY, maxOffsetY);
+    m_colorOffsetYCtrl->SetInt(0);
 
     m_colorMargin = 0;
 
@@ -396,10 +402,13 @@ void Toolbar::OnZoomUpdated (wxCommandEvent& event) {
 
 void Toolbar::OnColorPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        wxBusyCursor wait;
+
         wxSize size = m_mainFrame->GetOriginalImage().GetSize();
         wxColour color = m_colorPickerCtrl->GetColour();
-        wxImage img = editor::makeSquared(m_mainFrame->GetOriginalBitmap(), wxRect(0,0,size.GetWidth(), size.GetHeight()), &color, m_colorOffset, m_colorMargin);
+        wxImage img = editor::makeSquared(m_mainFrame->GetOriginalBitmap(), wxRect(0,0,size.GetWidth(), size.GetHeight()), &color, m_colorOffsetX, m_colorOffsetY, m_colorMargin);
         m_mainFrame->GetImagePanel()->SetImage(img);
+        m_mainFrame->GetImagePanel()->Autozoom();
         m_mainFrame->UpdateStatus();
     }
 
@@ -408,6 +417,8 @@ void Toolbar::OnColorPress (wxCommandEvent &event) {
 
 void Toolbar::OnCropPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        wxBusyCursor wait;
+
         wxImage img = editor::makeSquaredCrop(m_mainFrame->GetOriginalImage(), m_cropOffset);
         m_mainFrame->GetImagePanel()->SetImage(img);
         m_mainFrame->UpdateStatus();
@@ -418,6 +429,8 @@ void Toolbar::OnCropPress (wxCommandEvent &event) {
 
 void Toolbar::OnBlurPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        wxBusyCursor wait;
+
         wxImage img = editor::makeSquaredBlur(m_mainFrame->GetOriginalImage(), m_mainFrame->GetOriginalBitmap(), m_blurRadius);
         m_mainFrame->GetImagePanel()->SetImage(img);
         m_mainFrame->UpdateStatus();
@@ -475,14 +488,22 @@ void Toolbar::OnColorMeanPress (wxCommandEvent &event) {
 }
 
 void Toolbar::OnColorOffsetSlide (wxCommandEvent &event) {
-    m_colorOffset = event.GetInt();
-    m_colorOffsetCtrl->SetInt(m_colorOffset);
+    m_colorOffsetX = m_colorOffsetXSlider->GetValue();
+    m_colorOffsetXCtrl->SetInt(m_colorOffsetX);
+
+    m_colorOffsetY = m_colorOffsetYSlider->GetValue();
+    m_colorOffsetYCtrl->SetInt(m_colorOffsetY);
+
     OnColorPress(event);
 }
 
 void Toolbar::OnColorOffsetText (wxCommandEvent &event) {
-    m_colorOffset = m_colorOffsetCtrl->GetInt();
-    m_colorOffsetSlider->SetValue(m_colorOffset);
+    m_colorOffsetX = m_colorOffsetXCtrl->GetInt();
+    m_colorOffsetXSlider->SetValue(m_colorOffsetX);
+    
+    m_colorOffsetY = m_colorOffsetYCtrl->GetInt();
+    m_colorOffsetYSlider->SetValue(m_colorOffsetY);
+    
     OnColorPress(event);
 }
 

@@ -3,17 +3,15 @@
 #include "includes.h"
 #include "wxNumberCtrl.hpp"
 
-class RegionPanel : public wxCollapsiblePane {
+class RegionPanel : public wxPanel {
 
 public:
     RegionPanel(wxWindow *parent,
                 wxWindowID winid,
-                const wxString& label,
                 const wxPoint& pos = wxDefaultPosition,
                 const wxSize& size = wxDefaultSize,
                 long style = wxCP_DEFAULT_STYLE,
-                const wxValidator& val = wxDefaultValidator,
-                const wxString& name = wxASCII_STR(wxCollapsiblePaneNameStr));
+                const wxString& name = wxASCII_STR(wxPanelNameStr));
 
     wxRect GetRegion() const { return m_region; }
 
