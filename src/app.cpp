@@ -3,6 +3,8 @@
 
 bool App::OnInit()
 {
+    wxInitAllImageHandlers();
+
     MainFrame *frame = new MainFrame();
     frame->DragAcceptFiles(true);
     frame->Show(true);

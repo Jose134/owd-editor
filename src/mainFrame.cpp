@@ -52,7 +52,6 @@ MainFrame::MainFrame()
     wxBoxSizer* mainSizer = new wxBoxSizer(wxHORIZONTAL);
     mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    wxInitAllImageHandlers();
     m_imgPanel = new ImagePanel(this, ID_IMGPANEL);
     mainSizer->Add(m_imgPanel, 1, wxEXPAND);
 
@@ -101,7 +100,7 @@ void MainFrame::ExportCurrent () {
     if (!m_imgPanel->GetImage().IsOk()) return;
 
     wxFileName fn(m_imgFilename);
-    wxFileDialog saveFileDialog(this, ("Save as"), m_imgDir, fn.GetFullName(), "", wxFD_SAVE);
+    wxFileDialog saveFileDialog(this, ("Save as"), m_imgDir, fn.GetFullName(), "", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if (saveFileDialog.ShowModal() != wxID_CANCEL) {
         wxString filename = saveFileDialog.GetPath();
