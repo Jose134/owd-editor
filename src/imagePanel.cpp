@@ -98,6 +98,9 @@ void ImagePanel::Autozoom () {
         m_zoom = (double)panelSize.GetHeight() / m_image.GetHeight();
     }
 
+    m_dx = 0;
+    m_dy = 0;
+
     paintNow();
 
     wxCommandEvent event(EVT_IMGPANEL_ZOOM);

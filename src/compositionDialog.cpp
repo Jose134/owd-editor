@@ -136,7 +136,7 @@ void CompositionDialog::OnDirCombo(wxCommandEvent& event) {
 void CompositionDialog::OnOk(wxCommandEvent& event) {
     std::vector<wxBitmap> bitmaps;
     bitmaps.reserve(m_files.GetCount());
-    for (int i = 0; i < m_files.GetCount(); i++) {
+    for (size_t i = 0; i < m_files.GetCount(); i++) {
         bitmaps.push_back(wxBitmap(m_files[i]));
     }
 

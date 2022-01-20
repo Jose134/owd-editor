@@ -51,7 +51,6 @@ wxImage editor::makeSquaredCrop (const wxImage& img, int offset) {
 }
 
 wxImage editor::makeSquaredBlur (const wxImage& img, const int radius) {
-    int size = img.GetWidth() > img.GetHeight() ? img.GetWidth() : img.GetHeight();
     wxImage result = img.Copy();
     
     double scale = img.GetWidth() > img.GetHeight()
@@ -85,7 +84,6 @@ wxImage editor::makeSquaredBlur (const wxImage& img, const int radius) {
 }
 
 wxImage editor::makeSquaredBlur (const wxImage& img, const wxBitmap& bitmap, const int radius) {
-    int size = bitmap.GetWidth() > bitmap.GetHeight() ? bitmap.GetWidth() : bitmap.GetHeight();
     wxImage result = img;
     
     double scale = bitmap.GetWidth() > bitmap.GetHeight()
@@ -136,7 +134,7 @@ wxImage editor::compositeImage(const std::vector<wxBitmap>& bitmaps, const wxCol
     
     int maxWidth = 0;
     int maxHeight = 0;
-    for (int i = 0; i < bitmaps.size(); i++) {
+    for (size_t i = 0; i < bitmaps.size(); i++) {
         if (bitmaps[i].GetWidth() > maxWidth) {
             maxWidth = bitmaps[i].GetWidth();
         }
@@ -188,6 +186,11 @@ wxImage editor::compositeImage(const std::vector<wxBitmap>& bitmaps, const wxCol
             case Direction::TB_RL:
                 dstX = ((bitmaps.size() - i) / rows) * maxWidth + ((maxWidth - bitmaps[i].GetWidth()) / 2);
                 dstY = (i % rows) * maxHeight + ((maxHeight - bitmaps[i].GetHeight()) / 2);
+                break;
+            default:
+                //We shouldn't ever reach this
+                dstX = 0;
+                dstY = 0;
                 break;
         }
         

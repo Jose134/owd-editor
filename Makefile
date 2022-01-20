@@ -1,3 +1,6 @@
+CXX := g++
+CXXFLAGS := -std=gnu++11 -Wall
+
 SRC_DIR := ./src
 OBJ_DIR := ./obj
 $(shell [ -d $(OBJ_DIR) ] || mkdir -p $(OBJ_DIR))
@@ -10,10 +13,9 @@ WX_CXXFLAGS := $(shell $(WX_CONFIG) --cxxflags)
 WX_LIBS := $(shell $(WX_CONFIG) --libs)
 
 OBJECTS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC_FILES))
-CXX := g++ -std=gnu++11
 
 editor: $(OBJECTS)
-	$(CXX) -O3 -o $@ $(OBJECTS) $(LDFLAGS) $(WX_LIBS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -O3 -o $@ $(OBJECTS) $(LDFLAGS) $(WX_LIBS) $(LIBS)
  
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) -O3 -c -o $@ $(WX_CXXFLAGS) $(CXXFLAGS) $<
