@@ -3,7 +3,7 @@
 #include "wxNumberCtrl.hpp"
 #include <wx/clrpicker.h>
 
-#include "includes.h"
+#include "includes.hpp"
 #include "mainFrame.hpp"
 
 #include <vector>

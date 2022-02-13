@@ -1,6 +1,6 @@
 #pragma once
 
-#include "includes.h"
+#include "includes.hpp"
 
 class App : public wxApp
 {

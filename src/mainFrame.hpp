@@ -1,7 +1,9 @@
 #pragma once
 
-#include "includes.h"
+#include "includes.hpp"
 #include "imagePanel.hpp"
+
+#include <wx/listctrl.h>
 
 class Toolbar;
 
@@ -31,6 +33,8 @@ private:
     DECLARE_EVENT_TABLE()
 
 private:
+    wxListView* m_historyListView;
+
     wxBitmap m_originalBitmap;
     wxImage m_originalImg;
 

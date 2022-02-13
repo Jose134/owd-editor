@@ -1,6 +1,7 @@
 #include "mainFrame.hpp"
 
 #include <wx/filename.h>
+#include <wx/splitter.h>
 
 #include "compositionDialog.hpp"
 #include "imagePanel.hpp"
@@ -50,17 +51,56 @@ MainFrame::MainFrame()
 
     //LAYOUT
     wxBoxSizer* mainSizer = new wxBoxSizer(wxHORIZONTAL);
+    /*
+    
+    wxSplitterWindow* splitter = new wxSplitterWindow(this, wxID_ANY);
+    
+
+    wxFrame* win1 = new wxFrame(splitter, wxID_ANY, "Win1");
+    wxBoxSizer* win1Sizer = new wxBoxSizer(wxVERTICAL);
+    
+    m_historyListView = new wxListView(win1, wxID_ANY);
+    m_historyListView->AppendColumn("Edit Name");
+    m_historyListView->AppendColumn("Filename");
+    win1Sizer->Add(m_historyListView, 1, wxEXPAND);
+
+    win1->SetSizer(win1Sizer);
+
+    wxFrame* win2 = new wxFrame(splitter, wxID_ANY, "Win2");
+    wxBoxSizer* win2Sizer = new wxBoxSizer(wxHORIZONTAL);
+
+    m_imgPanel = new ImagePanel(win2, ID_IMGPANEL);
+    win2Sizer->Add(m_imgPanel, 1, wxEXPAND);
+
+    win2Sizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
+    m_toolbar = new Toolbar(win2, this);
+    win2Sizer->Add(m_toolbar, 0, wxEXPAND | wxALL);
+
+    win2Sizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
+    win2->SetSizer(win2Sizer);
+
+    splitter->Initialize(win1);
+    splitter->SplitVertically(win1, win2);
+    mainSizer->Add(splitter);
+
+    */
+
+
     mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
 
     m_imgPanel = new ImagePanel(this, ID_IMGPANEL);
     mainSizer->Add(m_imgPanel, 1, wxEXPAND);
 
     mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    m_toolbar = new Toolbar(this);
+    m_toolbar = new Toolbar(this, this);
     mainSizer->Add(m_toolbar, 0, wxEXPAND | wxALL);
 
     mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    
 
     SetSizer(mainSizer);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "includes.h"
+#include "includes.hpp"
 
 wxDECLARE_EVENT(EVT_IMGPANEL_ZOOM, wxCommandEvent);
 

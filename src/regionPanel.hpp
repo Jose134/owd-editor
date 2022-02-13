@@ -1,6 +1,6 @@
 #pragma once
 
-#include "includes.h"
+#include "includes.hpp"
 #include "wxNumberCtrl.hpp"
 
 class RegionPanel : public wxPanel {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "includes.h"
+#include "includes.hpp"
 
 #include "mainFrame.hpp"
 #include "wxNumberCtrl.hpp"
@@ -14,7 +14,7 @@
 
 class Toolbar : public wxPanel {
 public:
-    Toolbar(wxFrame *parent);
+    Toolbar(wxFrame* parent, wxFrame* mainFrame);
     void DisplayToolControls(int toolID);
     void PanelImageUpdated();
 

@@ -67,10 +67,10 @@ EVT_TEXT_ENTER(ID_BLUR_RADIUS_CTRL, Toolbar::OnBlurRadiusText)
 
 END_EVENT_TABLE()
 
-Toolbar::Toolbar (wxFrame *parent)
+Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     : wxPanel(parent) {
 
-    this->m_mainFrame = (MainFrame*)parent;
+    this->m_mainFrame = (MainFrame*)mainFrame;
 
     wxBoxSizer* box = new wxBoxSizer(wxVERTICAL);
     box->AddSpacer(editor::DEFAULT_SPACER_SIZE);
