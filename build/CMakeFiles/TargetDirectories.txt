@@ -1,0 +1,3 @@
+/home/darkbird/projects/owd-editor/build/CMakeFiles/rebuild_cache.dir
+/home/darkbird/projects/owd-editor/build/CMakeFiles/edit_cache.dir
+/home/darkbird/projects/owd-editor/build/CMakeFiles/editor.dir
