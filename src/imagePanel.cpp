@@ -48,8 +48,8 @@ void ImagePanel::SetImage (wxImage image) {
 }
 
 void ImagePanel::SetImage (wxString filename) {
-    m_image.LoadFile(filename);
-    m_bitmap = wxBitmap(filename);
+    m_image.LoadFile(filename, wxBITMAP_TYPE_ANY);
+    m_bitmap = wxBitmap(filename, wxBITMAP_TYPE_ANY);
     CalculateMeanColor();
     Autozoom();
 }

@@ -128,8 +128,8 @@ void MainFrame::SetOriginalImage(const wxString& filename, const wxString& dirna
     m_imgFilename = filename;
     m_imgDir = dirname;
 
-    m_originalBitmap = wxBitmap(filename);
-    m_originalImg = wxImage(filename);
+    m_originalBitmap = wxBitmap(filename, wxBITMAP_TYPE_ANY);
+    m_originalImg = wxImage(filename, wxBITMAP_TYPE_ANY);
     m_imgPanel->SetImage(filename);
 
     UpdateStatus();
@@ -175,7 +175,7 @@ void MainFrame::OnOpen (wxCommandEvent& event) {
 
     if (openFileDialog.ShowModal() != wxID_CANCEL) {
         wxString filenameFromRoot = wxString::Format("%s/%s", openFileDialog.GetDirectory(), openFileDialog.GetFilename());
-        SetOriginalImage(filenameFromRoot, openFileDialog.GetDirectory());
+        SetOriginalImage(openFileDialog.GetPath(), openFileDialog.GetDirectory());
     }
 }
 
