@@ -88,7 +88,7 @@ MainFrame::MainFrame()
     */
 
 
-    mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    //mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
 
     m_imgPanel = new ImagePanel(this, ID_IMGPANEL);

@@ -19,6 +19,8 @@ set(EDITOR_SOURCES
 	src/edits.hpp
 	src/history.cpp
 	src/history.hpp
+	src/icons.cpp
+	src/icons.hpp
 	src/imagePanel.cpp
 	src/imagePanel.hpp
 	src/includes.hpp
