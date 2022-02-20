@@ -98,26 +98,26 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     //ZOOM CONTROLS
     wxBoxSizer* hbox = new wxBoxSizer(wxHORIZONTAL);
     
-    wxBitmapButton* zoomoutBtn = new wxBitmapButton(this, wxID_ZOOM_OUT, loadIcon(ICON::ZOOM_OUT));
+    wxBitmapButton* zoomoutBtn = new wxBitmapButton(this, wxID_ZOOM_OUT, icon::loadIcon(icon::ID::ZOOM_OUT));
     zoomoutBtn->GetBitmap().CreateScaled(32, 32, 1, 1);
     zoomoutBtn->SetMinSize(editor::MIN_SQUARE_BUTTON_SIZE);
     hbox->Add(zoomoutBtn);
 
     hbox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
     
-    wxBitmapButton* zoomfitBtn = new wxBitmapButton(this, wxID_ZOOM_FIT, loadIcon(ICON::ZOOM_FIT));
+    wxBitmapButton* zoomfitBtn = new wxBitmapButton(this, wxID_ZOOM_FIT, icon::loadIcon(icon::ID::ZOOM_FIT));
     zoomfitBtn->SetMinSize(editor::MIN_SQUARE_BUTTON_SIZE);
     hbox->Add(zoomfitBtn);
 
     hbox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
     
-    wxBitmapButton *zoominBtn = new wxBitmapButton(this, wxID_ZOOM_IN, loadIcon(ICON::ZOOM_IN));
+    wxBitmapButton *zoominBtn = new wxBitmapButton(this, wxID_ZOOM_IN, icon::loadIcon(icon::ID::ZOOM_IN));
     zoominBtn->SetMinSize(editor::MIN_SQUARE_BUTTON_SIZE);
     hbox->Add(zoominBtn);
 
     hbox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
     // wxBitmap("res/cross-16.png")
-    m_toggleCenterBtn = new wxBitmapToggleButton(this, ID_TOGGLE_CENTER, loadIcon(ICON::CENTER));
+    m_toggleCenterBtn = new wxBitmapToggleButton(this, ID_TOGGLE_CENTER, icon::loadIcon(icon::ID::CENTER));
     m_toggleCenterBtn->SetMinSize(editor::MIN_SQUARE_BUTTON_SIZE);
     hbox->Add(m_toggleCenterBtn);
 
