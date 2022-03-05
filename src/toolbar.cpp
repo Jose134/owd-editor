@@ -116,7 +116,6 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     hbox->Add(zoominBtn);
 
     hbox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
-    // wxBitmap("res/cross-16.png")
     m_toggleCenterBtn = new wxBitmapToggleButton(this, ID_TOGGLE_CENTER, icon::loadIcon(icon::ID::CENTER));
     m_toggleCenterBtn->SetMinSize(editor::MIN_SQUARE_BUTTON_SIZE);
     hbox->Add(m_toggleCenterBtn);

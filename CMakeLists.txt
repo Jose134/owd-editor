@@ -31,6 +31,8 @@ set(EDITOR_SOURCES
 	src/regionPanel.hpp
 	src/toolbar.cpp
 	src/toolbar.hpp
+	src/wxField.hpp
+	src/wxField.cpp
 	src/wxNumberCtrl.cpp
 	src/wxNumberCtrl.hpp
 )
