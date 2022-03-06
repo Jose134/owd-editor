@@ -79,12 +79,18 @@ void wxField::SetLabel(const wxString& label) {
 void wxField::SetRange(int minimum, int maximum) {
     if (m_valInt < minimum || m_valInt > maximum) {
         SetValue(minimum);
-    } 
+    }
 
     m_slider->SetMin(minimum);
     m_slider->SetMax(maximum);
 
     m_ctrl->SetRange(minimum, maximum);
+    if (maximum == INT_MAX || minimum == INT_MIN) {
+        m_slider->Show(false);
+    }
+    else {
+        m_slider->Show(true);
+    }
 }
 
 void wxField::AcceptIntOnly(bool b) {

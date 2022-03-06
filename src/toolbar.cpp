@@ -212,6 +212,7 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     m_blurRadiusField = new wxField(blurPage, wxID_ANY, 0, "Radius");
     m_blurRadiusField->AcceptIntOnly(true);
     m_blurRadiusField->SetValue(0);
+    m_blurRadiusField->SetRange(0, INT_MAX);
     m_blurRadiusField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnBlurRadiusChange, this);
 
     blurPageBox->Add(m_blurRadiusField, 0, wxEXPAND | wxALL);
@@ -297,7 +298,7 @@ void Toolbar::PanelImageUpdated () {
 
     m_colorMargin = 0;
     m_colorMarginField->SetValue(0);
-    m_colorMarginField->SetRange(0, 10000);
+    m_colorMarginField->SetRange(0, INT_MAX);
 
     m_colorMeanBtn->SetBackgroundColour(m_mainFrame->GetImagePanel()->GetMeanColor());
 
