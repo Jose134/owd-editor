@@ -2,6 +2,8 @@
 
 IMPLEMENT_CLASS( wxField, wxPanel )
 
+wxDEFINE_EVENT(EVT_VALUE_CHANGED, wxCommandEvent);
+
 enum {
     ID_SLIDER = wxID_HIGHEST + 1,
     ID_CTRL   = wxID_HIGHEST + 2
@@ -14,14 +16,15 @@ EVT_TEXT_ENTER(ID_CTRL, wxField::OnCtrlChanged)
 
 END_EVENT_TABLE()
 
-bool wxField::Create(wxWindow *parent, wxWindowID id, const int value, const wxString & label,
-            const wxPoint &pos, const wxSize &size, long style, const wxString & name) {
-    
+wxField::wxField(wxWindow *parent, wxWindowID id, const int value, const wxString& label,
+            const wxPoint &pos, const wxSize &size, long style, const wxString & name)
+    :wxPanel(parent, id, pos, size, style, name)
+{
     wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
     m_valInt = value;
     m_valDouble = value;
-    
+
     m_slider = new wxSlider(this, ID_SLIDER, editor::DEFAULT_BLUR_RADIUS, 0, 1000);
     m_slider->SetValue(editor::DEFAULT_BLUR_RADIUS);
     sizer->Add(m_slider);
@@ -38,8 +41,6 @@ bool wxField::Create(wxWindow *parent, wxWindowID id, const int value, const wxS
     sizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
     SetSizer(sizer);
-
-    return true;
 }
 
 
@@ -107,7 +108,8 @@ void wxField::OnCtrlChanged(wxCommandEvent &event) {
 }
 
 void wxField::SendValueChangedEvent() {
-    wxCommandEvent _event(wxEVT_SLIDER);
+    wxCommandEvent _event(EVT_VALUE_CHANGED);
     _event.SetInt(GetInt());
-    wxPostEvent(this, _event);
+    // wxPostEvent(this, _event);
+    ProcessWindowEvent(_event);
 }

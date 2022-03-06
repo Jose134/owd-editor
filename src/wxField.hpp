@@ -5,6 +5,8 @@
 
 #include "constants.hpp"
 
+wxDECLARE_EVENT(EVT_VALUE_CHANGED, wxCommandEvent);
+
 class wxField : public wxPanel {
     DECLARE_CLASS( wxField )
     public:
@@ -12,15 +14,7 @@ class wxField : public wxPanel {
         
         wxField(wxWindow *parent, wxWindowID id = wxID_ANY, const int value = 0, const wxString& label = wxEmptyString,
             const wxPoint &pos = wxDefaultPosition, const wxSize &size = wxDefaultSize,
-            long style = wxTAB_TRAVERSAL, const wxString & name = wxPanelNameStr)
-        {
-            Create(parent, id, value, label, pos, size, style, name);
-        }
-
-        bool Create(wxWindow *parent, wxWindowID id = wxID_ANY, const int value = 0, const wxString& label = wxEmptyString,
-            const wxPoint &pos = wxDefaultPosition, const wxSize &size = wxDefaultSize,
             long style = wxTAB_TRAVERSAL, const wxString & name = wxPanelNameStr);
-
 
         int GetInt();
         double GetDouble();

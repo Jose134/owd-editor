@@ -4,6 +4,7 @@
 
 #include "mainFrame.hpp"
 #include "wxNumberCtrl.hpp"
+#include "wxField.hpp"
 
 #include <wx/simplebook.h>
 #include <wx/tglbtn.h>
@@ -40,16 +41,10 @@ private:
     void OnColorWhitePress(wxCommandEvent &event);
     void OnColorBlackPress(wxCommandEvent &event);
     void OnColorMeanPress(wxCommandEvent &event);
-    void OnColorOffsetSlide(wxCommandEvent &event);
-    void OnColorOffsetText(wxCommandEvent &event);
-    void OnColorMarginSlide(wxCommandEvent &event);
-    void OnColorMarginText(wxCommandEvent &event);
-
-    void OnCropOffsetSlide(wxCommandEvent &event);
-    void OnCropOffsetText(wxCommandEvent &event);
-
-    void OnBlurRadiusSlide(wxCommandEvent &event);
-    void OnBlurRadiusText(wxCommandEvent &event);
+    void OnColorOffsetChange(wxCommandEvent &event);
+    void OnColorMarginChange(wxCommandEvent &event);
+    void OnCropOffsetChange(wxCommandEvent &event);
+    void OnBlurRadiusChange(wxCommandEvent &event);
 
     DECLARE_EVENT_TABLE()
 
@@ -67,25 +62,20 @@ private:
     wxColourPickerCtrl* m_colorPickerCtrl;
     wxButton* m_colorMeanBtn;
 
-    wxSlider* m_colorOffsetXSlider;
-    wxNumberCtrl* m_colorOffsetXCtrl;
+    wxField* m_colorOffsetXField;
     int m_colorOffsetX;
 
-    wxSlider* m_colorOffsetYSlider;
-    wxNumberCtrl* m_colorOffsetYCtrl;
+    wxField* m_colorOffsetYField;
     int m_colorOffsetY;
 
-    wxSlider* m_colorMarginSlider;
-    wxNumberCtrl* m_colorMarginCtrl;
+    wxField* m_colorMarginField;
     int m_colorMargin;
 
     //CROP OPTIONS
-    wxSlider* m_cropOffsetSlider;
-    wxNumberCtrl* m_cropOffsetCtrl;
+    wxField* m_cropOffsetField;
     int m_cropOffset;
 
     //BLUR OPTIONS
-    wxSlider* m_blurRadiusSlider;
-    wxNumberCtrl* m_blurRadiusCtrl;
+    wxField* m_blurRadiusField;
     int m_blurRadius;
 };
