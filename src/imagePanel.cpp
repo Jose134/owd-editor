@@ -68,19 +68,13 @@ void ImagePanel::ZoomOut () {
     if (m_zoom < editor::MIN_ZOOM_LEVEL) { m_zoom = editor::MIN_ZOOM_LEVEL; }    
 
     paintNow();
-
-    wxCommandEvent event(EVT_IMGPANEL_ZOOM);
-    event.SetString(std::to_string(m_zoom));
-    wxPostEvent(this, event);
+    SendZoomEvent();
 }
 
 void ImagePanel::ZoomIn () {
     m_zoom += editor::ZOOM_FACTOR / m_image.GetHeight();
     paintNow();
-
-    wxCommandEvent event(EVT_IMGPANEL_ZOOM);
-    event.SetString(std::to_string(m_zoom));
-    wxPostEvent(this, event);
+    SendZoomEvent();
 }
 
 void ImagePanel::Autozoom () {
@@ -103,9 +97,7 @@ void ImagePanel::Autozoom () {
 
     paintNow();
 
-    wxCommandEvent event(EVT_IMGPANEL_ZOOM);
-    event.SetString(std::to_string(m_zoom));
-    wxPostEvent(this, event);
+    SendZoomEvent();
 }
 
 void ImagePanel::CalculateMeanColor () {
@@ -159,7 +151,7 @@ void ImagePanel::render (wxDC& dc) {
         wxPen pen(wxColour(255, 255, 255), 1, wxPENSTYLE_SOLID);
         cdc.SetPen(pen);
 
-        for (int i = 0; i < m_image.GetWidth(); i++) {
+        for (int i = 0; i < m_image.GetWidth()+1; i++) {
             int x1 = (i + m_dx) * m_zoom;
             int y1 = (m_dy) * m_zoom;
             int x2 = (i + m_dx) * m_zoom;
@@ -168,7 +160,7 @@ void ImagePanel::render (wxDC& dc) {
             cdc.DrawLine(x1, y1, x2, y2);
         }
 
-        for (int i = 0; i < m_image.GetHeight(); i++) {
+        for (int i = 0; i < m_image.GetHeight()+1; i++) {
             int x1 = (m_dx) * m_zoom;
             int y1 = (i + m_dy) * m_zoom;
             int x2 = (m_dx + m_image.GetWidth()) * m_zoom;
@@ -255,4 +247,10 @@ void ImagePanel::clamp (int &val, int min, int max) {
     else if (val > max) {
         val = max;
     }
+}
+
+void ImagePanel::SendZoomEvent() {
+    wxCommandEvent event(EVT_IMGPANEL_ZOOM);
+    event.SetString(std::to_string(m_zoom));
+    ProcessWindowEvent(event);
 }

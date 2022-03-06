@@ -49,6 +49,7 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     : wxPanel(parent) {
 
     this->m_mainFrame = (MainFrame*)mainFrame;
+    m_mainFrame->GetImagePanel()->Bind(EVT_IMGPANEL_ZOOM, &Toolbar::OnZoomUpdated, this);
 
     wxBoxSizer* box = new wxBoxSizer(wxVERTICAL);
     box->AddSpacer(editor::DEFAULT_SPACER_SIZE);

@@ -47,6 +47,8 @@ private:
     void OnKeyPressed(wxKeyEvent& event);
     void OnKeyReleased(wxKeyEvent& event);
 
+    void SendZoomEvent();
+
     DECLARE_EVENT_TABLE()
 
 private:

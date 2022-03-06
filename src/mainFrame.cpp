@@ -101,7 +101,6 @@ MainFrame::MainFrame()
 
     mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
     
-
     SetSizer(mainSizer);
 }
 
