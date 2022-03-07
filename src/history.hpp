@@ -12,6 +12,8 @@ struct HistoryItem {
 class History {
 
     public:
+        History() {}
+        
         void Push(wxString edit, const wxImage& img);
         wxImage GetPreview(int index);
         wxImage Restore(int index);

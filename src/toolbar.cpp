@@ -22,7 +22,9 @@ enum {
     ID_COLOR_BLACK_BTN        = wxID_HIGHEST + 8,
     ID_COLOR_MEAN_BTN         = wxID_HIGHEST + 9,
 
-    ID_TOGGLE_CENTER          = wxID_HIGHEST + 10
+    ID_TOGGLE_CENTER          = wxID_HIGHEST + 10,
+
+    ID_STACK                  = wxID_HIGHEST + 11,
 };
 
 BEGIN_EVENT_TABLE (Toolbar, wxPanel)
@@ -42,6 +44,7 @@ EVT_COLOURPICKER_CHANGED(ID_COLOR_COLOR_PICKER, Toolbar::OnColorPickerChange)
 EVT_BUTTON(ID_COLOR_WHITE_BTN, Toolbar::OnColorWhitePress)
 EVT_BUTTON(ID_COLOR_BLACK_BTN, Toolbar::OnColorBlackPress)
 EVT_BUTTON(ID_COLOR_MEAN_BTN, Toolbar::OnColorMeanPress)
+EVT_BUTTON(ID_STACK, Toolbar::OnStack)
 
 END_EVENT_TABLE()
 
@@ -226,6 +229,13 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
 
     box->Add(m_toolsBook, 0, wxEXPAND);
 
+    // STACK BUTTON
+    wxButton* stackBtn = new wxButton(this, ID_STACK, "STACK");
+    stackBtn->SetMinSize(editor::MIN_BUTTON_SIZE);
+    box->Add(stackBtn);
+
+    box->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+
     // EXPORT BUTTON
     wxButton* exportBtn = new wxButton(this, ID_EXPORT, "EXPORT");
     exportBtn->SetMinSize(editor::MIN_BUTTON_SIZE);
@@ -303,6 +313,9 @@ void Toolbar::PanelImageUpdated () {
 
     m_colorMeanBtn->SetBackgroundColour(m_mainFrame->GetImagePanel()->GetMeanColor());
 
+    m_blurRadius = editor::DEFAULT_BLUR_RADIUS;
+    m_blurRadiusField->SetValue(editor::DEFAULT_BLUR_RADIUS);
+
     DisplayToolControls(wxID_NONE);
 }
 
@@ -312,6 +325,7 @@ void Toolbar::OnZoomUpdated (wxCommandEvent& event) {
 
 void Toolbar::OnColorPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        m_lastEditName = "Color";
         wxBusyCursor wait;
 
         wxSize size = m_mainFrame->GetOriginalImage().GetSize();
@@ -327,6 +341,7 @@ void Toolbar::OnColorPress (wxCommandEvent &event) {
 
 void Toolbar::OnCropPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        m_lastEditName = "Crop";
         wxBusyCursor wait;
 
         wxImage img = editor::makeSquaredCrop(m_mainFrame->GetOriginalImage(), m_cropOffset);
@@ -339,7 +354,9 @@ void Toolbar::OnCropPress (wxCommandEvent &event) {
 
 void Toolbar::OnBlurPress (wxCommandEvent &event) {
     if (m_mainFrame->GetImagePanel()->GetImage().IsOk()) {
+        m_lastEditName = "Blur";
         wxBusyCursor wait;
+        std::cout << "yo " << std::endl;
 
         wxImage img = editor::makeSquaredBlur(m_mainFrame->GetOriginalImage(), m_mainFrame->GetOriginalBitmap(), m_blurRadius);
         m_mainFrame->GetImagePanel()->SetImage(img);
@@ -425,4 +442,9 @@ void Toolbar::OnBlurRadiusChange (wxCommandEvent &event) {
     m_blurRadius = m_blurRadiusField->GetInt();
 
     OnBlurPress(event);
+}
+
+void Toolbar::OnStack (wxCommandEvent &event) {
+    if (m_lastEditName.IsEmpty()) return;
+    m_mainFrame->PushToHistory(m_lastEditName);
 }

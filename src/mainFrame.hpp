@@ -2,6 +2,7 @@
 
 #include "includes.hpp"
 #include "imagePanel.hpp"
+#include "history.hpp"
 
 #include <wx/listctrl.h>
 
@@ -19,6 +20,8 @@ public:
     void SetOriginalImage(const wxString& filename, const wxString& dirname="");
     ImagePanel* GetImagePanel() { return m_imgPanel; }
     void ExportCurrent();
+
+    void PushToHistory(const wxString& editName);
     
 private:
 
@@ -33,6 +36,7 @@ private:
     DECLARE_EVENT_TABLE()
 
 private:
+    History m_hist;
     wxListView* m_historyListView;
 
     wxBitmap m_originalBitmap;

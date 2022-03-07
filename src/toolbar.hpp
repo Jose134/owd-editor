@@ -46,6 +46,8 @@ private:
     void OnCropOffsetChange(wxCommandEvent &event);
     void OnBlurRadiusChange(wxCommandEvent &event);
 
+    void OnStack(wxCommandEvent& event);
+
     DECLARE_EVENT_TABLE()
 
 private:
@@ -57,6 +59,9 @@ private:
 
     wxSimplebook* m_toolsBook;
     std::unordered_map<int, wxWindow*> m_toolsPages;
+
+    //LAST EDIT
+    wxString m_lastEditName;
 
     //COLOR BACKGROUND OPTIONS
     wxColourPickerCtrl* m_colorPickerCtrl;

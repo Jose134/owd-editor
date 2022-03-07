@@ -45,13 +45,13 @@ void ImagePanel::SetImage (wxImage image) {
     this->m_image = image;
     this->m_bitmap = wxBitmap(image);
     paintNow();
+    CalculateMeanColor();
 }
 
 void ImagePanel::SetImage (wxString filename) {
     m_image.LoadFile(filename, wxBITMAP_TYPE_ANY);
     m_bitmap = wxBitmap(filename, wxBITMAP_TYPE_ANY);
     CalculateMeanColor();
-    Autozoom();
 }
 
 void ImagePanel::SetDisplayCenter(bool displayCenter) {

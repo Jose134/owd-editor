@@ -90,7 +90,6 @@ MainFrame::MainFrame()
 
     //mainSizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-
     m_imgPanel = new ImagePanel(this, ID_IMGPANEL);
     mainSizer->Add(m_imgPanel, 1, wxEXPAND);
 
@@ -117,7 +116,6 @@ void MainFrame::SetOriginalImage(wxImage img) {
     m_originalBitmap = wxBitmap(img);
     m_originalImg = img;
     m_imgPanel->SetImage(img);
-    m_imgPanel->Autozoom();
 
     UpdateStatus();
     m_toolbar->PanelImageUpdated();
@@ -209,4 +207,9 @@ void MainFrame::OnDropFiles (wxDropFilesEvent& event) {
             SetOriginalImage(fname.GetFullPath(), fname.GetPathWithSep());
         }
     }
+}
+
+void MainFrame::PushToHistory(const wxString& editName) {
+    m_hist.Push(editName, m_imgPanel->GetImage());
+    SetOriginalImage(m_imgPanel->GetImage().Copy());
 }
