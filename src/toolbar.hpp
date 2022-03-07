@@ -46,6 +46,11 @@ private:
     void OnCropOffsetChange(wxCommandEvent &event);
     void OnBlurRadiusChange(wxCommandEvent &event);
 
+    void OnCropXChanged(wxCommandEvent &event);
+    void OnCropYChanged(wxCommandEvent &event);
+    void OnCropWChanged(wxCommandEvent &event);
+    void OnCropHChanged(wxCommandEvent &event);
+
     void OnStack(wxCommandEvent& event);
 
     DECLARE_EVENT_TABLE()
@@ -68,17 +73,18 @@ private:
     wxButton* m_colorMeanBtn;
 
     wxField* m_colorOffsetXField;
-    int m_colorOffsetX;
-
     wxField* m_colorOffsetYField;
-    int m_colorOffsetY;
-
     wxField* m_colorMarginField;
-    int m_colorMargin;
+
+    int m_colorOffsetX, m_colorOffsetY, m_colorMargin;
 
     //CROP OPTIONS
-    wxField* m_cropOffsetField;
-    int m_cropOffset;
+    wxField* m_cropXField;
+    wxField* m_cropYField;
+    wxField* m_cropWField;
+    wxField* m_cropHField;
+
+    int m_cropX, m_cropY, m_cropW, m_cropH;
 
     //BLUR OPTIONS
     wxField* m_blurRadiusField;

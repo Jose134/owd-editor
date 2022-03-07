@@ -192,15 +192,37 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     wxPanel* cropPage = new wxPanel(m_toolsBook);
     wxBoxSizer* cropPageBox = new wxBoxSizer(wxVERTICAL);
     cropPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
-
-    wxBoxSizer* cropOffsetControlSizer = new wxBoxSizer(wxHORIZONTAL);
     
-    m_cropOffsetField = new wxField(cropPage, wxID_ANY, 0, "Offset");
-    m_cropOffsetField->AcceptIntOnly(true);
-    m_cropOffsetField->SetValue(0);
-    m_cropOffsetField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnCropOffsetChange, this);
+    m_cropXField = new wxField(cropPage, wxID_ANY, 0, "X");
+    m_cropXField->AcceptIntOnly(true);
+    m_cropXField->SetValue(0);
+    m_cropXField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnCropXChanged, this);
 
-    cropPageBox->Add(m_cropOffsetField, 0, wxEXPAND | wxALL);
+    cropPageBox->Add(m_cropXField, 0, wxEXPAND | wxALL);
+    cropPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    
+    m_cropYField = new wxField(cropPage, wxID_ANY, 0, "Y");
+    m_cropYField->AcceptIntOnly(true);
+    m_cropYField->SetValue(0);
+    m_cropYField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnCropYChanged, this);
+
+    cropPageBox->Add(m_cropYField, 0, wxEXPAND | wxALL);
+    cropPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    
+    m_cropWField = new wxField(cropPage, wxID_ANY, 0, "Width");
+    m_cropWField->AcceptIntOnly(true);
+    m_cropWField->SetValue(0);
+    m_cropWField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnCropWChanged, this);
+
+    cropPageBox->Add(m_cropWField, 0, wxEXPAND | wxALL);
+    cropPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
+    
+    m_cropHField = new wxField(cropPage, wxID_ANY, 0, "Height");
+    m_cropHField->AcceptIntOnly(true);
+    m_cropHField->SetValue(0);
+    m_cropHField->Bind(EVT_VALUE_CHANGED, &Toolbar::OnCropHChanged, this);
+
+    cropPageBox->Add(m_cropHField, 0, wxEXPAND | wxALL);
     cropPageBox->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
 
@@ -286,8 +308,6 @@ void Toolbar::PanelImageUpdated () {
     const wxImage &img = m_mainFrame->GetImagePanel()->GetImage();
     if (!img.IsOk()) return;
 
-    int maxOffset = std::abs(img.GetWidth() - img.GetHeight()) / 2;
-
     int maxOffsetX = img.GetWidth() > img.GetHeight()
                         ? img.GetWidth()
                         : (3*img.GetHeight() - img.GetWidth()) / 2;
@@ -296,9 +316,22 @@ void Toolbar::PanelImageUpdated () {
                         ? img.GetHeight()
                         : (3*img.GetWidth() - img.GetHeight()) / 2;
 
-    m_cropOffset = 0;
-    m_cropOffsetField->SetRange(-maxOffset, maxOffset);
-    m_cropOffsetField->SetValue(0);
+    bool wide = img.GetWidth() > img.GetHeight();
+    m_cropX = wide ? (img.GetHeight() - img.GetWidth()) / 2 : 0;
+    m_cropXField->SetRange(0, img.GetWidth());
+    m_cropXField->SetValue(m_cropX);
+
+    m_cropY = wide ? 0 : (img.GetHeight() - img.GetWidth()) / 2;
+    m_cropYField->SetRange(0, img.GetHeight());
+    m_cropYField->SetValue(m_cropY);
+
+    m_cropW = wide ? img.GetHeight() : img.GetWidth();
+    m_cropWField->SetRange(1, img.GetWidth());
+    m_cropWField->SetValue(m_cropW);
+    
+    m_cropH = wide ? img.GetHeight() : img.GetWidth();
+    m_cropHField->SetRange(1, img.GetHeight());
+    m_cropHField->SetValue(m_cropH);
 
     m_colorOffsetX = 0;
     m_colorOffsetY = 0;
@@ -344,7 +377,8 @@ void Toolbar::OnCropPress (wxCommandEvent &event) {
         m_lastEditName = "Crop";
         wxBusyCursor wait;
 
-        wxImage img = editor::makeSquaredCrop(m_mainFrame->GetOriginalImage(), m_cropOffset);
+        //wxImage img = editor::makeSquaredCrop(m_mainFrame->GetOriginalImage(), m_cropOffset);
+        wxImage img = m_mainFrame->GetOriginalImage().GetSubImage(wxRect(m_cropX, m_cropY, m_cropW, m_cropH));
         m_mainFrame->GetImagePanel()->SetImage(img);
         m_mainFrame->UpdateStatus();
     }
@@ -432,10 +466,48 @@ void Toolbar::OnColorMarginChange (wxCommandEvent &event) {
     }
 }
 
-void Toolbar::OnCropOffsetChange (wxCommandEvent &event) {
-    m_cropOffset = m_cropOffsetField->GetInt();
+void Toolbar::OnCropXChanged (wxCommandEvent &event) {
+    int imgWidth = m_mainFrame->GetOriginalImage().GetWidth();
+    if (m_cropXField->GetInt() + m_cropW <= imgWidth) {
+        m_cropX = m_cropXField->GetInt();
+        OnCropPress(event);
+    }
+    else {
+        m_cropXField->SetValue(m_cropX);
+    }
+}
 
-    OnCropPress(event);
+void Toolbar::OnCropYChanged (wxCommandEvent &event) {
+    int imgHeight = m_mainFrame->GetOriginalImage().GetHeight();
+    if (m_cropYField->GetInt() + m_cropH <= imgHeight) {
+        m_cropY = m_cropYField->GetInt();
+        OnCropPress(event);
+    }
+    else {
+        m_cropYField->SetValue(m_cropY);
+    }
+}
+
+void Toolbar::OnCropWChanged (wxCommandEvent &event) {
+    int imgWidth = m_mainFrame->GetOriginalImage().GetWidth();
+    if (m_cropWField->GetInt() + m_cropX <= imgWidth) {
+        m_cropW = m_cropWField->GetInt();
+        OnCropPress(event);
+    }
+    else {
+        m_cropWField->SetValue(m_cropW);
+    }
+}
+
+void Toolbar::OnCropHChanged (wxCommandEvent &event) {
+    int imgHeight = m_mainFrame->GetOriginalImage().GetHeight();
+    if (m_cropHField->GetInt() + m_cropY <= imgHeight) {
+        m_cropH = m_cropHField->GetInt();
+        OnCropPress(event);
+    }
+    else {
+        m_cropHField->SetValue(m_cropH);
+    }
 }
 
 void Toolbar::OnBlurRadiusChange (wxCommandEvent &event) {

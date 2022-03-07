@@ -51,6 +51,7 @@ void ImagePanel::SetImage (wxImage image) {
 void ImagePanel::SetImage (wxString filename) {
     m_image.LoadFile(filename, wxBITMAP_TYPE_ANY);
     m_bitmap = wxBitmap(filename, wxBITMAP_TYPE_ANY);
+    paintNow();
     CalculateMeanColor();
 }
 
