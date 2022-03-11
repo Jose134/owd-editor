@@ -64,7 +64,7 @@ Toolbar::Toolbar (wxFrame* parent, wxFrame* mainFrame)
     
     box->AddSpacer(editor::DEFAULT_SPACER_SIZE);
 
-    wxButton* cropBtn = new wxButton(this, ID_CROP, "CROP SQUARED");
+    wxButton* cropBtn = new wxButton(this, ID_CROP, "CROP");
     cropBtn->SetMinSize(editor::MIN_BUTTON_SIZE);
     box->Add(cropBtn);
 
@@ -317,7 +317,7 @@ void Toolbar::PanelImageUpdated () {
                         : (3*img.GetWidth() - img.GetHeight()) / 2;
 
     bool wide = img.GetWidth() > img.GetHeight();
-    m_cropX = wide ? (img.GetHeight() - img.GetWidth()) / 2 : 0;
+    m_cropX = wide ? (img.GetWidth() - img.GetHeight()) / 2 : 0;
     m_cropXField->SetRange(0, img.GetWidth());
     m_cropXField->SetValue(m_cropX);
 

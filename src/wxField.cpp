@@ -29,7 +29,7 @@ wxField::wxField(wxWindow *parent, wxWindowID id, const int value, const wxStrin
     m_slider->SetValue(editor::DEFAULT_BLUR_RADIUS);
     sizer->Add(m_slider);
     sizer->AddSpacer(editor::DEFAULT_SPACER_SIZE);
-
+    
     m_ctrl = new wxNumberCtrl(this, ID_CTRL, editor::DEFAULT_BLUR_RADIUS, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
     m_ctrl->AcceptIntOnly(true);
     m_ctrl->SetInt(value);
